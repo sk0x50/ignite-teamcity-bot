@@ -104,6 +104,8 @@ public class JiraCommentsGeneratorV2 {
             res.append("\\n");
         }
 
+        // TODO fix new test detecting
+        /*
         StringBuilder newTests = new StringBuilder();
 
         int newTestsCount = 0;
@@ -158,6 +160,7 @@ public class JiraCommentsGeneratorV2 {
 
             newTests.append("\\n");
         }
+        */
 
         String suiteNameForComment = jiraEscText(suiteNameUsedForVisa);
 
@@ -178,6 +181,8 @@ public class JiraCommentsGeneratorV2 {
                 .append("borderStyle=dashed|borderColor=#ccc|titleBGColor=#D6F7C1}{panel}");
         }
 
+        // TODO fix new test detecting
+        /*
         if (newTests.length() > 0) {
             String bgColor;
             if (failedNewTestsCount > 0)
@@ -194,8 +199,17 @@ public class JiraCommentsGeneratorV2 {
             newTests.append("{panel:title=").append(branchVsBaseComment).append(": No new tests found!|")
                 .append("borderStyle=dashed|borderColor=#ccc|titleBGColor=#F7D6C1}{panel}");
         }
+        */
 
-        res.append("\\n").append(newTests).append("\\n").append("[TeamCity *").append(suiteNameForComment).append("* Results|").append(webUrl).append(']');
+        res.append("\\n")
+            // TODO fix new test detecting
+            // .append(newTests)
+            // .append("\\n")
+            .append("[TeamCity *")
+            .append(suiteNameForComment)
+            .append("* Results|")
+            .append(webUrl)
+            .append(']');
 
         return xmlEscapeText(res.toString());
     }
