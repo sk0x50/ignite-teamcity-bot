@@ -83,12 +83,13 @@ function showChainResultsWithSettings(result, settings) {
         res += showChainCurrentStatusData(server, settings);
     }
 
-    res += "<tr bgcolor='#F5F5FF'><th colspan='4' class='table-title'><b>New Tests</b></th></tr>"
-
-    for (var i = 0; i < result.servers.length; i++) {
-        var newTests = result.servers[i].newTestsUi;
-        res += showNewTestsData(newTests, settings);
-    }
+    // TODO fix new test detecting
+//    res += "<tr bgcolor='#F5F5FF'><th colspan='4' class='table-title'><b>New Tests</b></th></tr>"
+//
+//    for (var i = 0; i < result.servers.length; i++) {
+//        var newTests = result.servers[i].newTestsUi;
+//        res += showNewTestsData(newTests, settings);
+//    }
 
     res += "<tr><td colspan='4'>&nbsp;</td></tr>";
     res += "</table>";
