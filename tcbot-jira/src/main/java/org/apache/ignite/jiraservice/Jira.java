@@ -106,7 +106,21 @@ class Jira implements IJiraIntegration {
 
         String url = jiraApiUrl + "issue/" + ticket + "/comment";
 
-        return HttpUtil.sendPostAsStringToJira(config().decodedHttpAuthToken(), url, "{\"body\": \"" + comment + "\"}");
+        String body;
+        switch (config().getApiVersion()) {
+            case V2:
+                body = "{\"body\": \"" + comment + "\"}";
+                break;
+
+            case V3:
+                body = "{\"body\": " + comment + "}";
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported jira api version [version=" + config().getApiVersion() + ']');
+        }
+
+        return HttpUtil.sendPostAsStringToJira(config().decodedHttpAuthToken(), url, body);
     }
 
     /**
