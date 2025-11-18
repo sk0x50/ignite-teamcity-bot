@@ -822,6 +822,8 @@ public class TcBotTriggerAndSignOffService {
 
         JiraCommentResponse res;
 
+        String comment = null;
+
         try {
             String baseBranch = Strings.isNullOrEmpty(baseBranchForTc) ? prChainsProcessor.dfltBaseTcBranch(srvCodeOrAlias) : baseBranchForTc;
 
@@ -839,13 +841,16 @@ public class TcBotTriggerAndSignOffService {
 
             blockers = suitesStatuses.stream().mapToInt(ShortSuiteUi::totalBlockers).sum();
 
-            String comment = JiraCommentsGenerator.generateJiraComment(jira.config().getApiVersion(), compactor, suitesStatuses, newTestsStatuses, build.webUrl, buildTypeId, tcIgnited, blockers, build.branchName, baseBranch);
+            comment = JiraCommentsGenerator.generateJiraComment(jira.config().getApiVersion(), compactor, suitesStatuses, newTestsStatuses, build.webUrl, buildTypeId, tcIgnited, blockers, build.branchName, baseBranch);
 
             res = objMapper.readValue(jira.postJiraComment(ticket, comment), JiraCommentResponse.class);
         }
         catch (Exception e) {
             String errMsg = "Exception happened during commenting JIRA ticket " +
-                "[build=" + build.getId() + ", errMsg=" + e.getMessage() + ']';
+                "[build=" + build.getId() +
+                ", ticketId=" + ticket +
+                ", comment=" + comment +
+                ", errMsg=" + e.getMessage() + ']';
 
             logger.error(errMsg);
 
